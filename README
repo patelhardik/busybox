@@ -1,13 +1,13 @@
 Please see the LICENSE file for details on copying and usage.
 Please refer to the INSTALL file for instructions on how to build.
 
-NOTE: The REAME is modified to document how to build busybox on ARM64 using latest NDK. The original README is available on Master branch
+NOTE: The README is modified to document how to build busybox on ARM64 using latest NDK. The original README is available on Master branch
 
 ----------------
 
 Building busybox for AARCH64/ARM64 Android using Android NDK 21 and clang:
 
-  1. Download Busybox latest source.
+  1. Download the Busybox's latest source.
   2. Checkout 1_32_stable_aarch64 branch
   3. Download NDK21 and export the NDK path
   4. cd busybox
