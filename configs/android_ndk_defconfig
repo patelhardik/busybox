@@ -56,18 +56,24 @@ CONFIG_FEATURE_SYSLOG=y
 #
 # Build Options
 #
-# CONFIG_STATIC is not set
+#CONFIG_STATIC is not set
 # CONFIG_PIE is not set
 # CONFIG_NOMMU is not set
 # CONFIG_BUILD_LIBBUSYBOX is not set
 # CONFIG_FEATURE_INDIVIDUAL is not set
 # CONFIG_FEATURE_SHARED_BUSYBOX is not set
 # CONFIG_LFS is not set
-CONFIG_CROSS_COMPILER_PREFIX="arm-linux-androideabi-"
-CONFIG_SYSROOT="/opt/android-ndk/platforms/android-9/arch-arm"
-CONFIG_EXTRA_CFLAGS="-DANDROID -D__ANDROID__ -DSK_RELEASE -nostdlib -march=armv7-a -msoft-float -mfloat-abi=softfp -mfpu=neon -mthumb -mthumb-interwork -fpic -fno-short-enums -fgcse-after-reload -frename-registers -fuse-ld=bfd"
-CONFIG_EXTRA_LDFLAGS="-Xlinker -z -Xlinker muldefs -nostdlib -Bdynamic -Xlinker -dynamic-linker -Xlinker /system/bin/linker -Xlinker -z -Xlinker nocopyreloc -Xlinker --no-undefined ${SYSROOT}/usr/lib/crtbegin_dynamic.o ${SYSROOT}/usr/lib/crtend_android.o"
-CONFIG_EXTRA_LDLIBS="dl m c gcc"
+
+
+# Choose these, depending on your device and build machine
+API=30
+TARGET=aarch64-linux-android
+TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64
+CONFIG_CROSS_COMPILER_PREFIX=$TOOLCHAIN/bin/$TARGET$API-clang
+CONFIG_SYSROOT=$TOOLCHAIN/sysroot
+CONFIG_EXTRA_CFLAGS="-DANDROID -fPIE -fPIC -Wignored-optimization-argument -Wunused-command-line-argument -I{SYSROOT}/usr/include -I{SYSROOT}/usr/local/include"
+CONFIG_EXTRA_LDFLAGS="-march=arm64-v8a -mfpu=neon -I{SYSROOT}/usr/lib"
+CONFIG_EXTRA_LDLIBS="m"
 
 #
 # Debugging Options
@@ -735,8 +741,8 @@ CONFIG_RAIDAUTORUN=y
 CONFIG_RX=y
 CONFIG_SETSID=y
 CONFIG_STRINGS=y
-CONFIG_TIME=y
-CONFIG_TIMEOUT=y
+#CONFIG_TIME is not set
+#CONFIG_TIMEOUT is not set
 CONFIG_TTYSIZE=y
 CONFIG_VOLNAME=y
 # CONFIG_WATCHDOG is not set

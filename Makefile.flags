@@ -26,6 +26,8 @@ CFLAGS += $(call cc-option,-Wunused -Wunused-parameter,)
 CFLAGS += $(call cc-option,-Wunused-function -Wunused-value,)
 CFLAGS += $(call cc-option,-Wmissing-prototypes -Wmissing-declarations,)
 CFLAGS += $(call cc-option,-Wno-format-security,)
+CFLAGS += $(call cc-option,-Wignored-optimization-argument,)
+CFLAGS += $(call cc-option,-Wunused-command-line-argument,)
 # warn about C99 declaration after statement
 CFLAGS += $(call cc-option,-Wdeclaration-after-statement,)
 # If you want to add more -Wsomething above, make sure that it is
@@ -151,8 +153,8 @@ endif
 CRYPT_AVAILABLE := $(shell echo 'int main(void){return 0;}' >crypttest.c; $(CC) $(CFLAGS) -lcrypt -o /dev/null crypttest.c >/dev/null 2>&1 && echo "y"; rm crypttest.c)
 ifeq ($(CRYPT_AVAILABLE),y)
 LDLIBS += m rt crypt
-else
-LDLIBS += m rt
+else # This is a brute force fix but can be handled gracefully by detecting android as target. May break for other abi
+LDLIBS += 
 endif
 # libm may be needed for dc, awk, ntpd
 # librt may be needed for clock_gettime()
